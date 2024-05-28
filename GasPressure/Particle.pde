@@ -1,7 +1,7 @@
 class Particle{
   float molarMass, temperature, a, b;
   PVector velocity, acceleration, location;
-  color default_color = color(142,100,209);
+  color default_color;
   Particle(float mm, float temp, float a_val, float b_val, float x, float y){
     molarMass = mm;
     temperature = temp;
@@ -10,13 +10,14 @@ class Particle{
     location = new PVector(x,y);
     velocity = new PVector(0,0);
     acceleration = new PVector(0,0);
+    default_color = color(142,100,209);
   }
   
   private PVector calcVelocity(){
   }
   
   void applyForce(PVector force){
-    PVector f = force.div(mass);
+    PVector f = force.div(molarMass);
     acceleration.add(f);
   }
   
@@ -27,10 +28,10 @@ class Particle{
   }
   
   void bounce(){
-    if(location.x>width-25*molarMass|| location.x<25*molarMass){
+    if(location.x>width-500*b*molarMass|| location.x<500*b*molarMass){
       velocity.x*=-1;
     }
-    if(location.y>height-25*molarMass || location.y<25*molarMass){
+    if(location.y>height-500*b*molarMass || location.y<500*b*molarMass){
       velocity.y*=-1;
     }
   }
@@ -39,6 +40,6 @@ class Particle{
     stroke(1);
     strokeWeight(2);
     fill(default_color);
-    ellipse(location.x, location.y, 50 * molarMass, 50 * molarMass);
+    ellipse(location.x, location.y, 1000*b * molarMass, 1000*b * molarMass);
   }
 }
