@@ -6,11 +6,13 @@ float pressure;
 float moles; 
 color c;
 boolean isIdeal = true;
+Particle[] inContainer; 
 
-public Container(float P, float numMoles, boolean isIdeal) {
+public Container(float P, float numMoles, boolean isIdeal, Particle[] addedGas) {
   pressure = P;
   moles = numMoles;
   this.isIdeal = isIdeal;
+  inContainer = addedGas;
 }
 
 public void setTemp(float newTemp) {
@@ -35,6 +37,9 @@ public float getMoles() {
 
 public float getVolume() {
   return Height*Width;
+}
+public float getHeight() {
+  return Height;
 }
 
 public float getWidth() {
