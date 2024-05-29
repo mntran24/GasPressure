@@ -13,8 +13,10 @@ class Particle{
     default_color = color(142,100,209);
   }
   
-  private PVector calcVelocity(){
-  }
+  //private PVector calcVelocity(){
+  //}
+  
+  
   
   void applyForce(PVector force){
     PVector f = force.div(molarMass);
@@ -34,6 +36,16 @@ class Particle{
     if(location.y>height-500*b*molarMass || location.y<500*b*molarMass){
       velocity.y*=-1;
     }
+  }
+  
+  void bounceAgainstParticle(Particle other){
+    PVector dist = PVector.sub(other.location, location);
+    float distMag = dist.mag();
+    float termDist = 500*b*molarMass+500*other.b*other.molarMass;
+    if(distMag<termDist){
+      float correct = (termDist-distMag)/2.0;
+      PVector cor = dist.copy();
+      PVector correctVect = 
   }
   
   void display(){
