@@ -16,12 +16,10 @@ class Particle{
   //private PVector calcVelocity(){
   //}
   
-  
-  
-  void applyForce(PVector force){
-    PVector f = force.div(molarMass);
-    acceleration.add(f);
-  }
+  //void applyForce(PVector force){
+  //  PVector f = force.div(molarMass);
+  //  acceleration.add(f);
+  //}
   
   void move(){
     velocity.add(acceleration);
@@ -45,7 +43,22 @@ class Particle{
     if(distMag<termDist){
       float correct = (termDist-distMag)/2.0;
       PVector cor = dist.copy();
-      PVector correctVect = 
+      PVector correctVect = cor.normalize().mult(correct);
+      other.location.add(correctVect);
+      location.sub(correctVect);
+      float angle = dist.heading();
+      float sine = sin(angle);
+      float cosine = cos(angle);
+      PVector[] tempPos={
+        new PVector(), new PVector()
+      };
+      tempPos[1].x=cosine*dist.x+sine*dist.y;
+      tempPos[1].y=cosine*dist.y-sine*dist.x;
+      PVector[] tempVel = {
+        new PVector(), new PVector()
+      };
+      //work in progress
+    }  
   }
   
   void display(){
