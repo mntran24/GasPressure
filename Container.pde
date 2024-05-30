@@ -1,18 +1,22 @@
-float Height = 10;
-float Width = 5; 
+import com.krab.lazy.*;
+
+LazyGui gui; 
+
+float Height = 200;
+float Width = 200; 
 float temp = 298;
 float IGC = 0.08206;
 float pressure;
 float moles; 
 color c;
 boolean isIdeal = true;
-Particle[] inContainer; 
+//Particle[] inContainer; 
 
-public Container(float P, float numMoles, boolean isIdeal, Particle[] addedGas) {
+public Container(float P, float numMoles, boolean isIdeal) {
   pressure = P;
   moles = numMoles;
   this.isIdeal = isIdeal;
-  inContainer = addedGas;
+  //inContainer = addedGas;
 }
 
 public void setTemp(float newTemp) {
@@ -46,21 +50,43 @@ public float getWidth() {
   return Width;
 }
 
-public float calcPressure() {
-  if (isIdeal) {
-    float P = (moles*IGC*temp)/getVolume();
-    return P;
-  }
+//public float calcPressure() {
+//  if (isIdeal) {
+//    float P = (moles*IGC*temp)/getVolume();
+//    return P;
+//  }
   
-  else {
+//  else {
     
-  }
-}
+//  }
+//}
 
 void setup() {
   size(1000, 800);
-  rect(500, 400, getWidth(), getHeight());
+  rect(500, 400, this.getWidth(), this.getHeight());
+  gui = new LazyGui(this);
 }
 void display() {
+  // Volume Slider 
+  float currentVolume = gui.slider("Volume", 4, 4, 10);
+  
+  
+  // Toggle between gas types
+  String[] gasTypes = {"Hydrogen", "Oxygen", "Ammonia"};
+  String currentGas = gui.radio("Type of Gas", gasTypes);
+  if (currentGas.equals("Hydrogen")) {
+    
+  }
+  else if (currentGas.equals("Oxygen")) {
+    
+  }
+  else if (currentGas.equals("Ammonia")) {
+    
+  }
+  
+  //Default gas type
+  gui.radio("Type of Gas", gasTypes, "Hydrogen");
+  
+  
   
 }
