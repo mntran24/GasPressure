@@ -46,18 +46,57 @@ class Particle{
       PVector correctVect = cor.normalize().mult(correct);
       other.location.add(correctVect);
       location.sub(correctVect);
+      
       float angle = dist.heading();
       float sine = sin(angle);
       float cosine = cos(angle);
+      
       PVector[] tempPos={
         new PVector(), new PVector()
       };
       tempPos[1].x=cosine*dist.x+sine*dist.y;
       tempPos[1].y=cosine*dist.y-sine*dist.x;
+      
       PVector[] tempVel = {
         new PVector(), new PVector()
       };
-      //work in progress
+      tempVel[0].x=cosine*velocity.x+sine*velocity.y;
+      tempVel[0].y=cosine*velocity.y-sine*velocity.x;
+      tempVel[1].x=cosine*other.velocity.x+sine*other.velocity.y;
+      tempVel[1].y=cosine*other.velocity.y-sine*other.velocity.x;
+      
+      PVector[] finalVel={
+        new PVector(), new PVector()
+      };
+      finalVel[0].x = ((molarMass - other.molarMass)*tempVel[0].x+2*other.molarMass*tempVel[1].x)/(molarMass+other.molarMass);
+      finalVel[0].y = tempVel[0].y;
+      
+      finalVel[1].x = ((other.molarMass - molarMass)*tempVel[1].x+2*molarMass*tempVel[0].x)/(molarMass+other.molarMass);
+      finalVel[1].y = tempVel[1].y;
+      
+      tempPos[0].x+=finalVel[0].x;
+      tempPos[1].x+=finalVel[1].x;
+      
+      PVector[] finalPos = {
+        new PVector(), new PVector()
+      };
+      finalPos[0].x = cosine * tempPos[0].x - sine * tempPos[0].y;
+      finalPos[0].y = cosine * tempPos[0].y + sine * tempPos[0].x;
+      finalPos[1].x = cosine * tempPos[1].x - sine * tempPos[1].y;
+      finalPos[1].y = cosine * tempPos[1].y + sine * tempPos[1].x;
+
+      // update balls to screen position
+      other.location.x = location.x + finalPos[1].x;
+      other.location.y = location.y + finalPos[1].y;
+
+      location.add(finalPos[0]);
+
+      // update velocities
+      velocity.x = cosine * finalVel[0].x - sine * finalVel[0].y;
+      velocity.y = cosine * finalVel[0].y + sine * finalVel[0].x;
+      other.velocity.x = cosine * finalVel[1].x - sine * finalVel[1].y;
+      other.velocity.y = cosine * finalVel[1].y + sine * finalVel[1].x;
+              //work in progress
     }  
   }
   
