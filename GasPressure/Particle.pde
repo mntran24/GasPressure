@@ -46,18 +46,32 @@ class Particle{
       PVector correctVect = cor.normalize().mult(correct);
       other.location.add(correctVect);
       location.sub(correctVect);
+      
       float angle = dist.heading();
       float sine = sin(angle);
       float cosine = cos(angle);
+      
       PVector[] tempPos={
         new PVector(), new PVector()
       };
       tempPos[1].x=cosine*dist.x+sine*dist.y;
       tempPos[1].y=cosine*dist.y-sine*dist.x;
+      
       PVector[] tempVel = {
         new PVector(), new PVector()
       };
-      //work in progress
+      tempVel[0].x=cosine*velocity.x+sine*velocity.y;
+      tempVel[0].y=cosine*velocity.y-sine*velocity.x;
+      tempVel[1].x=cosine*other.velocity.x+sine*other.velocity.y;
+      tempVel[1].y=cosine*other.velocity.y-sine*other.velocity.x;
+      
+      PVector[] finalVel={
+        new PVector(), new PVector()
+      };
+      finalVel[0].x = ((molarMass - other.molarMass)*tempVel[0].x+2*other.molarMass*tempVel[1].x)/(molarMass+other.molarMass);
+      finalVel[0].y = tempVel[0].y;
+      
+              //work in progress
     }  
   }
   
