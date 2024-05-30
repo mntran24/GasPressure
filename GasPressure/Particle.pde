@@ -71,6 +71,31 @@ class Particle{
       finalVel[0].x = ((molarMass - other.molarMass)*tempVel[0].x+2*other.molarMass*tempVel[1].x)/(molarMass+other.molarMass);
       finalVel[0].y = tempVel[0].y;
       
+      finalVel[1].x = ((other.molarMass - molarMass)*tempVel[1].x+2*molarMass*tempVel[0].x)/(molarMass+other.molarMass);
+      finalVel[1].y = tempVel[1].y;
+      
+      tempPos[0].x+=finalVel[0].x;
+      tempPos[1].x+=finalVel[1].x;
+      
+      PVector[] finalPos = {
+        new PVector(), new PVector()
+      };
+      finalPos[0].x = cosine * tempPos[0].x - sine * tempPos[0].y;
+      finalPos[0].y = cosine * tempPos[0].y + sine * tempPos[0].x;
+      finalPos[1].x = cosine * tempPos[1].x - sine * tempPos[1].y;
+      finalPos[1].y = cosine * tempPos[1].y + sine * tempPos[1].x;
+
+      // update balls to screen position
+      other.location.x = location.x + finalPos[1].x;
+      other.location.y = location.y + finalPos[1].y;
+
+      location.add(finalPos[0]);
+
+      // update velocities
+      velocity.x = cosine * finalVel[0].x - sine * finalVel[0].y;
+      velocity.y = cosine * finalVel[0].y + sine * finalVel[0].x;
+      other.velocity.x = cosine * finalVel[1].x - sine * finalVel[1].y;
+      other.velocity.y = cosine * finalVel[1].y + sine * finalVel[1].x;
               //work in progress
     }  
   }
