@@ -72,15 +72,7 @@ void setup() {
   gui = new LazyGui(this);
 }
 
-void draw() {
-  background(255);
-  fill(180, 250, 250);
-  rect(400, 100, test.getWidth(), test.getHeight());
-  drawHydrogen(500,500);
-  drawOxygen(600,600);
-  drawAmmonia(300,300);
-  gui.draw();
-}
+
 
 // Hydrogen atom = blue 
 // Oxygen atom = green
@@ -107,11 +99,26 @@ void drawAmmonia(int x, int y) {
   circle(x, y, 28);
 }
 
-void display() {
+void draw() {
+  background(255);
+  fill(180, 250, 250);
+  rect(400, 100, test.getWidth(), test.getHeight());
+  
+  Hydrogen p1 = new Hydrogen(test.getTemp(), 100, 100);
+  p1.display();
+  
+  //Oxygen p2 = new Oxygen(test.getTemp(), 200, 200);
+  //p2.display();
+  
+  //Ammonia p3 = new Ammonia(test.getTemp(), 300, 300);
+  //p3.display();
+  
   // Volume Slider 
   float currentVolume = gui.slider("Volume", 4, 4, 10);
+  gui.sliderSet("Volume", currentVolume);
   
-  int numParticles = gui.sliderInt("Number of Particles", 250, 0, 1000);
+
+  int numParticles = gui.sliderInt("Num of Particles", 250, 0, 1000);
   
   // Toggle between gas types
   String[] gasTypes = {"Hydrogen", "Oxygen", "Ammonia"};
