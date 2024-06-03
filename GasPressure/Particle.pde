@@ -8,7 +8,7 @@ class Particle{
     a = a_val;
     b = b_val;
     location = new PVector(x,y);
-    velocity = new PVector(0,0);
+    velocity = new PVector(random(-3,3),random(-3,3));
     acceleration = new PVector(0,0);
     default_color = color(142,100,209);
   }
