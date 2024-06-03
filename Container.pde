@@ -70,23 +70,26 @@ void display() {
   // Volume Slider 
   float currentVolume = gui.slider("Volume", 4, 4, 10);
   
+  int numParticles = gui.sliderInt("Number of Particles", 250, 0, 1000);
   
   // Toggle between gas types
   String[] gasTypes = {"Hydrogen", "Oxygen", "Ammonia"};
   String currentGas = gui.radio("Type of Gas", gasTypes);
-  if (currentGas.equals("Hydrogen")) {
-    
-  }
-  else if (currentGas.equals("Oxygen")) {
-    
-  }
-  else if (currentGas.equals("Ammonia")) {
-    
-  }
-  
-  //Default gas type
+   //Default gas type
   gui.radio("Type of Gas", gasTypes, "Hydrogen");
   
+  // Display all particles (can change the particles no matter where each one is)
+  for (int n = 0; n < numParticles; n++) {
+    if (currentGas.equals("Hydrogen")) {
+      
+    }
+    else if (currentGas.equals("Oxygen")) {
+    
+    }
+    else if (currentGas.equals("Ammonia")) {
+    
+    }
+  }
   
   
 }
