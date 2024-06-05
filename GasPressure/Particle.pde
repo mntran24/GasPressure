@@ -104,6 +104,6 @@ class Particle{
     stroke(1);
     strokeWeight(2);
     fill(default_color);
-    ellipse(location.x, location.y, 1000*b * molarMass, 1000*b * molarMass);
+    ellipse(location.x, location.y, 500*b * molarMass, 500*b * molarMass);
   }
 }
