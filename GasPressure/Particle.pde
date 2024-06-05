@@ -8,7 +8,7 @@ class Particle{
     a = a_val;
     b = b_val;
     location = new PVector(x,y);
-    velocity = new PVector(0,0);
+    velocity = new PVector(random(-3,3),random(-3,3));
     acceleration = new PVector(0,0);
     default_color = color(142,100,209);
   }
@@ -104,6 +104,6 @@ class Particle{
     stroke(1);
     strokeWeight(2);
     fill(default_color);
-    ellipse(location.x, location.y, 1000*b * molarMass, 1000*b * molarMass);
+    ellipse(location.x, location.y, 500*b * molarMass, 500*b * molarMass);
   }
 }
