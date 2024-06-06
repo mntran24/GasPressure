@@ -1,16 +1,18 @@
 class Particle{
   float molarMass, temperature, a, b;
-  PVector velocity, acceleration, location;
+  PVector velocity, location;
   color default_color;
-  Particle(float mm, float temp, float a_val, float b_val, float x, float y){
+  Particle(float mm, float temp, float a_val, float b_val, float x, float y, color default_color){
     molarMass = mm;
     temperature = temp;
     a = a_val;
     b = b_val;
     location = new PVector(x,y);
-    velocity = new PVector(random(-3,3),random(-3,3));
-    acceleration = new PVector(0,0);
-    default_color = color(142,100,209);
+    double speed = Math.sqrt((8*8.3144*temperature)/(3.14*molarMass))/5;
+    int head = (int)random(1,359);
+    velocity = new PVector((float)(speed*cos(head)),(float)(speed*sin(head)));
+    this.default_color = default_color;
+    //default_color = color(142,100,209);
   }
   
   //private PVector calcVelocity(){
@@ -22,15 +24,14 @@ class Particle{
   //}
   
   void move(){
-    velocity.add(acceleration);
     location.add(velocity);
   }
   
   void bounce(){
-    if(location.x>width-500*b*molarMass|| location.x<500*b*molarMass){
+    if(location.x>width-25*b*molarMass|| location.x<25*b*molarMass){
       velocity.x*=-1;
     }
-    if(location.y>height-500*b*molarMass || location.y<500*b*molarMass){
+    if(location.y>height-25*b*molarMass || location.y<25*b*molarMass){
       velocity.y*=-1;
     }
   }
@@ -38,7 +39,7 @@ class Particle{
   void bounceAgainstParticle(Particle other){
     PVector dist = PVector.sub(other.location, location);
     float distMag = dist.mag();
-    float termDist = 500*b*molarMass+500*other.b*other.molarMass;
+    float termDist = 50*b*molarMass+50*other.b*other.molarMass;
     if(distMag<termDist){
       float correct = (termDist-distMag)/2.0;
       PVector cor = dist.copy();
@@ -103,6 +104,6 @@ class Particle{
     stroke(1);
     strokeWeight(2);
     fill(default_color);
-    ellipse(location.x, location.y, 500*b * molarMass, 500*b * molarMass);
+    ellipse(location.x, location.y, 50*b * molarMass, 50*b * molarMass);
   }
 }
