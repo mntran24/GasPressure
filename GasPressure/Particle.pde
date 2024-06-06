@@ -24,7 +24,6 @@ class Particle{
   void move(){
     velocity.add(acceleration);
     location.add(velocity);
-    acceleration.mult(0);
   }
   
   void bounce(){
