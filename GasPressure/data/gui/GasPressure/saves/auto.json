@@ -805,6 +805,11 @@
           "className": "FolderNode",
           "path": "saves/autosave rules",
           "type": "FOLDER"
+        },
+        {
+          "className": "SaveItemNode",
+          "path": "saves/auto",
+          "type": "TRANSIENT"
         }
       ],
       "className": "SaveFolderNode",
@@ -820,7 +825,7 @@
       "type": "VALUE"
     },
     {
-      "valueFloat": 250.0,
+      "valueFloat": 20.0,
       "currentPrecisionIndex": 4,
       "valueFloatPrecision": 1.0,
       "className": "SliderIntNode",
@@ -849,7 +854,6 @@
           "type": "TRANSIENT"
         }
       ],
-      "window": {},
       "className": "RadioFolderNode",
       "path": "Type of Gas",
       "type": "FOLDER"
