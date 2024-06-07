@@ -2,6 +2,8 @@ class Particle{
   float molarMass, temperature, a, b;
   PVector velocity, location;
   color default_color;
+  float radius;
+  
   Particle(float mm, float temp, float a_val, float b_val, float x, float y, color default_color){
     molarMass = mm;
     temperature = temp;
@@ -13,6 +15,8 @@ class Particle{
     velocity = new PVector((float)(speed*cos(head)),(float)(speed*sin(head)));
     this.default_color = default_color;
     //default_color = color(142,100,209);
+    
+    radius = 50*b * molarMass;
   }
   
   //private PVector calcVelocity(){
@@ -37,6 +41,33 @@ class Particle{
   }
   
   void bounceAgainstParticle(Particle other){
+    PVector v1 = velocity;
+    PVector v2 = other.velocity;
+    
+    PVector loc1 = location;
+    PVector loc2 = other.location;
+    
+    // Current distance between the centers of the particles (use distance formula)
+    double currDistBtwnCenters = Math.sqrt(Math.pow(loc1.x - loc2.x, 2) + Math.pow(loc1.y - loc2.y, 2));
+    
+    // Distance between centers of particles when tangent to each other 
+    double distBtwnCenters = radius + other.radius;
+    
+    // Split up velocity vector into x and y comp
+    float angle1 = Math.atan(loc1.y/loc1.x);  //FIX DIVISION 
+    float angle2 = Math.atan(loc2.y/loc2.x);
+    
+    float v1x = v1*cos(angle1);
+    float v1y = v1*sin(angle1);
+    float v2x = v2*cos(angle2);
+    float v2y = v2*sin(angle2);
+    
+    if (currDistBtwnCenters <= distBtwnCenters) {
+      
+    }
+    
+    
+    
     PVector dist = PVector.sub(other.location, location);
     float distMag = dist.mag();
     float termDist = 50*b*molarMass+50*other.b*other.molarMass;
@@ -104,6 +135,6 @@ class Particle{
     stroke(1);
     strokeWeight(2);
     fill(default_color);
-    ellipse(location.x, location.y, 50*b * molarMass, 50*b * molarMass);
+    ellipse(location.x, location.y, radius, radius);
   }
 }
