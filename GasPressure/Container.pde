@@ -8,9 +8,11 @@ class Container {
   float pressure;
   int numMoles; 
   String currGas;
-  color c;
   boolean isIdeal = true;
-  ArrayList<Particle> inContainer; 
+  ArrayList<Particle> inContainer;
+  int molesH;
+  int molesO;
+  int molesN;
   
   Container(float P, float T, boolean isIdeal) {
     pressure = P;
@@ -18,6 +20,9 @@ class Container {
     this.isIdeal = isIdeal;
     inContainer = new ArrayList<Particle>();
     numMoles = inContainer.size();
+    molesH = 0;
+    molesO = 0;
+    molesN = 0;
   }
   
   void updateParticle(int numParticles, String currentGas){
@@ -25,12 +30,15 @@ class Container {
       for (int n = 0; n < Math.abs(numParticles); n++) {
     if (currentGas.equals("Hydrogen")) {
       inContainer.add(new Hydrogen(temp, random(415,400+Width), random(115,100+Height)));
+      molesH++;
     }
     else if (currentGas.equals("Oxygen")) {
       inContainer.add(new Oxygen(temp, random(415,400+Width), random(115,100+Height)));
+      molesO++;
     }
     else if (currentGas.equals("Ammonia")) {
       inContainer.add(new Ammonia(temp, random(415,400+Width), random(115,100+Height)));
+      molesN++;
     }
     }
     }
@@ -39,6 +47,17 @@ class Container {
         throw new IllegalArgumentException();
       }
       for (int n = 0; n < Math.abs(numParticles); n++) {
+        if(inContainer.get(0).gasType().equals("Hydrogen")){
+          molesH--;
+        }
+        else{
+          if(inContainer.get(0).gasType().equals("Oxygen")){
+            molesO--;
+          }
+          else{
+            molesN--;
+          }
+        }
         inContainer.remove(0);
       }
     }
@@ -50,16 +69,18 @@ class Container {
     rect(400, 100, Width, Height);
   }
   
-  //public float calcPressure() {
-  //  if (isIdeal) {
-  //    float P = (moles*IGC*temp)/getVolume();
-  //    return P;
-  //  }
-    
-  //  else {
+  float calcPressure() {
+    if (isIdeal) {
+      pressure = (numMoles*IGC*temp)/(Height*Width);
+      return pressure;
+    }
+    else {
+      float pH = (IGC*temp/(Hydrogen.molarVol-Hydrogen.b))-(Hydrogen.a/Math.pow(Hydrogen.molarVol,2));
+      float pO = (IGC*temp/(Oxygen.molarVol-Oxygen.b))-(Oxygen.a/Math.pow(Oxygen.molarVol,2));
+      float pN = (IGC*temp/(Ammonia.molarVol-Ammonia.b))-(Ammonia.a/Math.pow(Ammonia.molarVol,2));
       
-  //  }
-  //}
+    }
+  }
     
   
 }

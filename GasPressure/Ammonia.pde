@@ -1,7 +1,7 @@
 class Ammonia extends Particle{
-  color default_color;
   Ammonia(float temp, float x, float y){
     super(17.034, temp, 4.225, 0.03713, x, y, color(81, 237, 143));
+    gasType = "Ammonia";
   }
   void move(){
     super.move();
@@ -14,5 +14,8 @@ class Ammonia extends Particle{
   }
   void display(){
     super.display();
+  }
+  String gasType(){
+    return super.gasType();
   }
 }

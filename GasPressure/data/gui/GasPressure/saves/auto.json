@@ -825,7 +825,7 @@
       "type": "VALUE"
     },
     {
-      "valueFloat": 20.0,
+      "valueFloat": 18.0,
       "currentPrecisionIndex": 4,
       "valueFloatPrecision": 1.0,
       "className": "SliderIntNode",
@@ -833,16 +833,16 @@
       "type": "VALUE"
     },
     {
-      "valueString": "Oxygen",
+      "valueString": "Hydrogen",
       "children": [
         {
-          "valueBoolean": false,
+          "valueBoolean": true,
           "className": "RadioItemNode",
           "path": "Type of Gas/Hydrogen",
           "type": "TRANSIENT"
         },
         {
-          "valueBoolean": true,
+          "valueBoolean": false,
           "className": "RadioItemNode",
           "path": "Type of Gas/Oxygen",
           "type": "TRANSIENT"

@@ -1,7 +1,7 @@
 class Oxygen extends Particle{
-  color default_color;
   Oxygen(float temp, float x, float y){
     super(32, temp, 1.382, 0.03186, x, y,color(55, 102, 196));
+    gasType = "Oxygen";
   }
   void move(){
     super.move();
@@ -14,5 +14,8 @@ class Oxygen extends Particle{
   }
   void display(){
     super.display();
+  }
+  String gasType(){
+    return super.gasType();
   }
 }

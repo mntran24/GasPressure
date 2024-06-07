@@ -2,6 +2,7 @@ class Particle{
   float molarMass, temperature, a, b;
   PVector velocity, location;
   color default_color;
+  String gasType = "default";
   Particle(float mm, float temp, float a_val, float b_val, float x, float y, color default_color){
     molarMass = mm;
     temperature = temp;
@@ -28,10 +29,10 @@ class Particle{
   }
   
   void bounce(){
-    if(location.x>width-25*b*molarMass|| location.x<25*b*molarMass){
+    if(location.x>750-25*b*molarMass|| location.x<400+25*b*molarMass){
       velocity.x*=-1;
     }
-    if(location.y>height-25*b*molarMass || location.y<25*b*molarMass){
+    if(location.y>700-25*b*molarMass || location.y<100+25*b*molarMass){
       velocity.y*=-1;
     }
   }
@@ -105,5 +106,8 @@ class Particle{
     strokeWeight(2);
     fill(default_color);
     ellipse(location.x, location.y, 50*b * molarMass, 50*b * molarMass);
+  }
+  String gasType(){
+    return gasType;
   }
 }
