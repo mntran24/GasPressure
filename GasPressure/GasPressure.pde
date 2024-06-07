@@ -73,12 +73,13 @@ void draw(){
     b.move();
     b.bounce();
     b.display();
-    for(Particle a:ParticleList){
-      if(!b.equals(a)){
-        b.bounceAgainstParticle(a);
-      }
-    }
+    //for(Particle a:ParticleList){
+    //  if(!b.equals(a)){
+    //    b.bounceAgainstParticle(a);
+    //  }
+    //}
   }
+  ParticleList.get(0).bounceAgainstParticle(ParticleList.get(1));
   fill(0);
   text(ParticleList.size(), 20, 40);
 }
