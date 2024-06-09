@@ -1,6 +1,9 @@
+float aOxygen = 1.382;
+float bOxygen = 0.03186;
+float mmOxygen = 32;
 class Oxygen extends Particle{
   Oxygen(float temp, float x, float y){
-    super(32, temp, 1.382, 0.03186, x, y,color(55, 102, 196));
+    super(mmOxygen, temp, aOxygen, bOxygen, x, y,color(55, 102, 196));
     gasType = "Oxygen";
   }
   void move(){
@@ -14,8 +17,5 @@ class Oxygen extends Particle{
   }
   void display(){
     super.display();
-  }
-  String gasType(){
-    return super.gasType();
   }
 }

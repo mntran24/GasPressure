@@ -817,15 +817,15 @@
       "type": "FOLDER"
     },
     {
-      "valueFloat": 4.0,
+      "valueFloat": 338.0,
       "currentPrecisionIndex": 4,
       "valueFloatPrecision": 1.0,
-      "className": "SliderNode",
-      "path": "Volume",
+      "className": "SliderIntNode",
+      "path": "Temp (K)",
       "type": "VALUE"
     },
     {
-      "valueFloat": 18.0,
+      "valueFloat": 1.0,
       "currentPrecisionIndex": 4,
       "valueFloatPrecision": 1.0,
       "className": "SliderIntNode",
@@ -857,6 +857,12 @@
       "className": "RadioFolderNode",
       "path": "Type of Gas",
       "type": "FOLDER"
+    },
+    {
+      "valueBoolean": true,
+      "className": "ToggleNode",
+      "path": "Ideal Gas?",
+      "type": "VALUE"
     }
   ],
   "window": {},

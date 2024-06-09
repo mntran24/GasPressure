@@ -3,41 +3,38 @@ import com.krab.lazy.*;
 class Container {
   float Height = 600;
   float Width = 350; 
-  float temp;
+  float volume = Height*Width;
+  float temp = 298;
   float IGC = 0.08206;
-  float pressure;
-  int numMoles; 
-  String currGas;
-  boolean isIdeal = true;
+  float pressure = 0;
+  int numMoles;
   ArrayList<Particle> inContainer;
   int molesH;
   int molesO;
   int molesN;
   
-  Container(float P, float T, boolean isIdeal) {
-    pressure = P;
-    temp = T;
-    this.isIdeal = isIdeal;
+  Container() {
+    //default temp = 298 K (room temp) and default pressure depends on default # of particles and type of particle (configured in setup())
     inContainer = new ArrayList<Particle>();
     numMoles = inContainer.size();
     molesH = 0;
     molesO = 0;
     molesN = 0;
   }
-  
+  //updates the number of particles
   void updateParticle(int numParticles, String currentGas){
     if(numParticles>0){
       for (int n = 0; n < Math.abs(numParticles); n++) {
     if (currentGas.equals("Hydrogen")) {
-      inContainer.add(new Hydrogen(temp, random(415,400+Width), random(115,100+Height)));
+      inContainer.add(new Hydrogen(temp, random(420,380+Width), random(120,80+Height)));
       molesH++;
     }
     else if (currentGas.equals("Oxygen")) {
-      inContainer.add(new Oxygen(temp, random(415,400+Width), random(115,100+Height)));
+      inContainer.add(new Oxygen(temp, random(420,380+Width), random(120,80+Height)));
       molesO++;
     }
     else if (currentGas.equals("Ammonia")) {
-      inContainer.add(new Ammonia(temp, random(415,400+Width), random(115,100+Height)));
+      inContainer.add(new Ammonia(temp, random(420,380+Width), random(120,80+Height)));
       molesN++;
     }
     }
@@ -47,11 +44,11 @@ class Container {
         throw new IllegalArgumentException();
       }
       for (int n = 0; n < Math.abs(numParticles); n++) {
-        if(inContainer.get(0).gasType().equals("Hydrogen")){
+        if(inContainer.get(0).gasType.equals("Hydrogen")){
           molesH--;
         }
         else{
-          if(inContainer.get(0).gasType().equals("Oxygen")){
+          if(inContainer.get(0).gasType.equals("Oxygen")){
             molesO--;
           }
           else{
@@ -69,16 +66,20 @@ class Container {
     rect(400, 100, Width, Height);
   }
   
-  float calcPressure() {
-    if (isIdeal) {
-      pressure = (numMoles*IGC*temp)/(Height*Width);
+  //calculates pressure depending on whether we assume it's an ideal gas
+  float calcPressure(boolean ideal) {
+    if (ideal) {
+      //using Ideal Gas Law
+      pressure = (numMoles*IGC*temp)/(volume);
       return pressure;
     }
     else {
-      float pH = (IGC*temp/(Hydrogen.molarVol-Hydrogen.b))-(Hydrogen.a/Math.pow(Hydrogen.molarVol,2));
-      float pO = (IGC*temp/(Oxygen.molarVol-Oxygen.b))-(Oxygen.a/Math.pow(Oxygen.molarVol,2));
-      float pN = (IGC*temp/(Ammonia.molarVol-Ammonia.b))-(Ammonia.a/Math.pow(Ammonia.molarVol,2));
-      
+      //using Van Der Waal's eqn
+      double pH = (molesH*IGC*temp/(volume-molesH*bHydrogen))-(aHydrogen*Math.pow(molesH,2)/Math.pow(volume,2));
+      double pO = (molesO*IGC*temp/(volume-molesO*bOxygen))-(aOxygen*Math.pow(molesO,2)/Math.pow(volume,2));
+      double pN = (molesN*IGC*temp/(volume-molesN*bAmmonia))-(aAmmonia*Math.pow(molesN,2)/Math.pow(volume,2));
+      pressure = (float)pH+(float)pO+(float)pN;
+      return pressure;
     }
   }
     

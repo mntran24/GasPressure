@@ -13,26 +13,17 @@ class Particle{
     int head = (int)random(1,359);
     velocity = new PVector((float)(speed*cos(head)),(float)(speed*sin(head)));
     this.default_color = default_color;
-    //default_color = color(142,100,209);
   }
-  
-  //private PVector calcVelocity(){
-  //}
-  
-  //void applyForce(PVector force){
-  //  PVector f = force.div(molarMass);
-  //  acceleration.add(f);
-  //}
   
   void move(){
     location.add(velocity);
   }
   
   void bounce(){
-    if(location.x>750-25*b*molarMass|| location.x<400+25*b*molarMass){
+    if(location.x>750-200*b|| location.x<400+200*b){
       velocity.x*=-1;
     }
-    if(location.y>700-25*b*molarMass || location.y<100+25*b*molarMass){
+    if(location.y>700-200*b || location.y<100+200*b){
       velocity.y*=-1;
     }
   }
@@ -105,9 +96,6 @@ class Particle{
     stroke(1);
     strokeWeight(2);
     fill(default_color);
-    ellipse(location.x, location.y, 50*b * molarMass, 50*b * molarMass);
-  }
-  String gasType(){
-    return gasType;
+    ellipse(location.x, location.y, 400*b, 400*b);
   }
 }
