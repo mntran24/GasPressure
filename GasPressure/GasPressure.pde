@@ -1,12 +1,10 @@
 LazyGui gui; 
 Container test;
-String[] gasTypes = {"Hydrogen", "Oxygen", "Ammonia"};
-String instructions = "To add new particles, move the slider to the right and make sure \n"
-+"you have selected the type of particle you would like. \n"
+String instructions = "To add new particles, move the slider corresponding to \n"
++"the desired type of particle to the right. \n"
 +"To remove particles, move the slider to the left. \n"
-+"Note that the particles are removed according to FIFO. \n"
 +"The temp range is from 273 to 373 K (0 to 100 C). \n"
-+"The number of particles can be between 1 and 20. \n"
++"The number of each type of particles can be between 0 and 7. \n"
 +"Particle collisions are perfectly elastic. \n"
 +"Particle speed is determined with respect to molar mass \n"
 +"and temperature, divided by 5 for the sake of simulation. \n"
@@ -26,17 +24,16 @@ void setup() {
   
   gui.sliderInt("Temp (K)", 298, 273, 373);
   
-  int currMoles = gui.sliderInt("Num of Particles", 5, 1, 20);
+  int currMolesH = gui.sliderInt("# of Hydrogen", 3, 0, 7);
+  int currMolesO = gui.sliderInt("# of Oxygen", 3, 0, 7);
+  int currMolesN = gui.sliderInt("# of Ammonia", 3, 0, 7);
   
-  // Toggle between gas types
-  
-  String currGas = gui.radio("Type of Gas", gasTypes,"Hydrogen");
    //Default gas type
   
   gui.toggle("Ideal Gas?", true);
   
   //Display all particles (can change the particles no matter where each one is)
-  test.updateParticle(currMoles,currGas);
+  test.updateParticle(currMolesH, currMolesO, currMolesN);
   test.calcPressure(true);
 }
 
@@ -44,22 +41,44 @@ void draw() {
   background(255);
   test.display();
   
-  for(Particle p:test.inContainer){
-    p.display();
-    p.move();
-    p.bounce();
+  for(Hydrogen h:test.particlesH){
+    h.display();
+    h.move();
+    h.bounce();
     //for(Particle a:test.inContainer){
     //  if(!p.equals(a)){
     //    p.bounceAgainstParticle(a);
     //  }
     //}
   }
-  if(gui.hasChanged("Num of Particles")){
-    int delta = (int)(gui.slider("Num of Particles")) - test.numMoles;
-    test.updateParticle(delta,gui.radio("Type of Gas",gasTypes));
+  for(Oxygen o:test.particlesO){
+    o.display();
+    o.move();
+    o.bounce();
+    //for(Particle a:test.inContainer){
+    //  if(!p.equals(a)){
+    //    p.bounceAgainstParticle(a);
+    //  }
+    //}
+  }
+  for(Ammonia n:test.particlesN){
+    n.display();
+    n.move();
+    n.bounce();
+    //for(Particle a:test.inContainer){
+    //  if(!p.equals(a)){
+    //    p.bounceAgainstParticle(a);
+    //  }
+    //}
+  }
+  if(gui.hasChanged("# of Hydrogen")||gui.hasChanged("# of Oxygen")||gui.hasChanged("# of Ammonia")){
+    int deltaH = (int)(gui.slider("# of Hydrogen")) - test.molesH;
+    int deltaO = (int)(gui.slider("# of Oxygen")) - test.molesO;
+    int deltaN = (int)(gui.slider("# of Ammonia")) - test.molesN;
+    test.updateParticle(deltaH, deltaO, deltaN);
     test.calcPressure(gui.toggle("Ideal Gas?"));
-    println("container size: "+test.inContainer.size());
-    println("delta: "+delta);
+    println("container size: "+test.particlesH.size()+test.particlesO.size()+test.particlesN.size());
+    //println("delta: "+delta);
   }
   if(gui.hasChanged("Temp (K)")){
     test.temp = gui.slider("Temp (K)");
@@ -73,9 +92,12 @@ void draw() {
   textSize(20);
   fill(#000000);
   text("Pressure (milliPascals): ",770,50);
-  text("Instructions:",770,120);
+  text(test.pressure*101325*1000,970,50);
+  text("Total # of moles: ",770,90);
+  text(test.molesH+test.molesO+test.molesN,915,90);
+  text("Instructions:",770,150);
   textSize(15);
-  text(instructions,770,140);
+  text(instructions,770,170);
   textSize(20);
   text("Things to notice:",770,500);
   textSize(15);

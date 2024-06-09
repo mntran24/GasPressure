@@ -817,7 +817,7 @@
       "type": "FOLDER"
     },
     {
-      "valueFloat": 338.0,
+      "valueFloat": 335.0,
       "currentPrecisionIndex": 4,
       "valueFloatPrecision": 1.0,
       "className": "SliderIntNode",
@@ -825,38 +825,28 @@
       "type": "VALUE"
     },
     {
-      "valueFloat": 1.0,
+      "valueFloat": 7.0,
       "currentPrecisionIndex": 4,
       "valueFloatPrecision": 1.0,
       "className": "SliderIntNode",
-      "path": "Num of Particles",
+      "path": "# of Hydrogen",
       "type": "VALUE"
     },
     {
-      "valueString": "Hydrogen",
-      "children": [
-        {
-          "valueBoolean": true,
-          "className": "RadioItemNode",
-          "path": "Type of Gas/Hydrogen",
-          "type": "TRANSIENT"
-        },
-        {
-          "valueBoolean": false,
-          "className": "RadioItemNode",
-          "path": "Type of Gas/Oxygen",
-          "type": "TRANSIENT"
-        },
-        {
-          "valueBoolean": false,
-          "className": "RadioItemNode",
-          "path": "Type of Gas/Ammonia",
-          "type": "TRANSIENT"
-        }
-      ],
-      "className": "RadioFolderNode",
-      "path": "Type of Gas",
-      "type": "FOLDER"
+      "valueFloat": 5.0,
+      "currentPrecisionIndex": 4,
+      "valueFloatPrecision": 1.0,
+      "className": "SliderIntNode",
+      "path": "# of Oxygen",
+      "type": "VALUE"
+    },
+    {
+      "valueFloat": 7.0,
+      "currentPrecisionIndex": 4,
+      "valueFloatPrecision": 1.0,
+      "className": "SliderIntNode",
+      "path": "# of Ammonia",
+      "type": "VALUE"
     },
     {
       "valueBoolean": true,

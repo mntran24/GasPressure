@@ -7,58 +7,57 @@ class Container {
   float temp = 298;
   float IGC = 0.08206;
   float pressure = 0;
-  int numMoles;
-  ArrayList<Particle> inContainer;
+  ArrayList<Hydrogen> particlesH;
+  ArrayList<Oxygen> particlesO;
+  ArrayList<Ammonia> particlesN;
   int molesH;
   int molesO;
   int molesN;
   
   Container() {
     //default temp = 298 K (room temp) and default pressure depends on default # of particles and type of particle (configured in setup())
-    inContainer = new ArrayList<Particle>();
-    numMoles = inContainer.size();
+    particlesH = new ArrayList<Hydrogen>();
+    particlesO = new ArrayList<Oxygen>();
+    particlesN = new ArrayList<Ammonia>();
     molesH = 0;
     molesO = 0;
     molesN = 0;
   }
   //updates the number of particles
-  void updateParticle(int numParticles, String currentGas){
-    if(numParticles>0){
-      for (int n = 0; n < Math.abs(numParticles); n++) {
-    if (currentGas.equals("Hydrogen")) {
-      inContainer.add(new Hydrogen(temp, random(420,380+Width), random(120,80+Height)));
-      molesH++;
-    }
-    else if (currentGas.equals("Oxygen")) {
-      inContainer.add(new Oxygen(temp, random(420,380+Width), random(120,80+Height)));
-      molesO++;
-    }
-    else if (currentGas.equals("Ammonia")) {
-      inContainer.add(new Ammonia(temp, random(420,380+Width), random(120,80+Height)));
-      molesN++;
-    }
-    }
+  void updateParticle(int numH, int numO, int numN){
+    if(numH>=0){
+      for(int m=0;m<numH;m++){
+        particlesH.add(new Hydrogen(temp, random(420,380+Width), random(120,80+Height)));
+      }
     }
     else{
-      if(Math.abs(numParticles)>=inContainer.size()){
-        throw new IllegalArgumentException();
-      }
-      for (int n = 0; n < Math.abs(numParticles); n++) {
-        if(inContainer.get(0).gasType.equals("Hydrogen")){
-          molesH--;
-        }
-        else{
-          if(inContainer.get(0).gasType.equals("Oxygen")){
-            molesO--;
-          }
-          else{
-            molesN--;
-          }
-        }
-        inContainer.remove(0);
+      for(int m=0;m<Math.abs(numH);m++){
+        particlesH.remove(0);
       }
     }
-    numMoles = inContainer.size();
+    if(numO>=0){
+      for(int n=0;n<numO;n++){
+        particlesO.add(new Oxygen(temp, random(420,380+Width), random(120,80+Height)));
+      }
+    }
+    else{
+      for(int n=0;n<Math.abs(numO);n++){
+        particlesO.remove(0);
+      }
+    }
+    if(numN>=0){
+      for(int p=0;p<numN;p++){
+        particlesN.add(new Ammonia(temp, random(420,380+Width), random(120,80+Height)));
+      }
+    }
+    else{
+      for(int p=0;p<Math.abs(numN);p++){
+        particlesN.remove(0);
+      }
+    }
+    molesH = particlesH.size();
+    molesO = particlesO.size();
+    molesN = particlesN.size();
   }
   
   void display(){
@@ -70,7 +69,7 @@ class Container {
   float calcPressure(boolean ideal) {
     if (ideal) {
       //using Ideal Gas Law
-      pressure = (numMoles*IGC*temp)/(volume);
+      pressure = ((molesH+molesN+molesO)*IGC*temp)/(volume);
       return pressure;
     }
     else {
