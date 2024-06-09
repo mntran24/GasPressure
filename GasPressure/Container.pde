@@ -1,4 +1,4 @@
-
+import com.krab.lazy.*;
 
 class Container {
   float Height = 600;
@@ -20,76 +20,52 @@ class Container {
     numMoles = inContainer.size();
   }
   
-  public ArrayList<Particle> getContainer() {
-    return inContainer;
-  }
-  
   void updateParticle(int numParticles, String currentGas){
-    if (numParticles > 0) {
+    if(numParticles>0){
       for (int n = 0; n < Math.abs(numParticles); n++) {
         if (currentGas.equals("Hydrogen")) {
-          inContainer.add(new Hydrogen(temp, random(415,400+Width), random(115,100+Height)));
+          inContainer.add(new Hydrogen(temp, random(453,400+Width-53), random(153,100+Height-53)));
         }
         else if (currentGas.equals("Oxygen")) {
-          inContainer.add(new Oxygen(temp, random(415,400+Width), random(115,100+Height)));
+          inContainer.add(new Oxygen(temp, random(460,400+Width-60), random(160,100+Height-60)));
         }
         else if (currentGas.equals("Ammonia")) {
-          inContainer.add(new Ammonia(temp, random(415,400+Width), random(115,100+Height)));
+          inContainer.add(new Ammonia(temp, random(480,400+Width-80), random(180,100+Height-80)));
         }
       }
     }
-    else {
-      if(Math.abs(numParticles)>=inContainer.size()){
-        throw new IllegalArgumentException();
-      }
-      for (int n = 0; n < Math.abs(numParticles); n++) {
-        inContainer.remove(0);
+    else{
+      //if(Math.abs(numParticles)>=inContainer.size()){
+      //  throw new IllegalArgumentException();
+      //}
+      int num = 0;
+      //int currNumMoles = numMoles;
+      for (int n = 0; n < numMoles; n++) {
+        if (num >= Math.abs(numParticles)) {
+          break;
+        }
+        if (inContainer.get(n).getName().equals(currentGas)) {
+          inContainer.remove(n);
+          n -= 1;
+          num += 1;
+        }
       }
     }
     numMoles = inContainer.size();
   }
   
-  
-  public void setTemp(float newTemp) {
-    this.temp = newTemp;
-  }
-  
-  public void setHeight(float newVol) {
-    this.Height = newVol;
-  }
-  
-  public void setWidth(float newVol) {
-    this.Height = newVol;
-  }
-  
-  public float getTemp() {
-    return temp;
-  }
-  
-  public int getMoles() {
-    return numMoles;
-  }
-  
-  public float getVolume() {
-    return Height*Width;
-  }
-  
-  public float getHeight() {
-    return Height;
-  }
-  
-  public float getWidth() {
-    return Width;
+  void display(){
+    fill(180, 250, 250);
+    rect(400, 100, Width, Height);
   }
   
   //public float calcPressure() {
   //  if (isIdeal) {
-  //    float P = (numMoles*IGC*temp)/getVolume();
+  //    float P = (moles*IGC*temp)/getVolume();
   //    return P;
   //  }
     
   //  else {
-      
       
   //  }
   //}
