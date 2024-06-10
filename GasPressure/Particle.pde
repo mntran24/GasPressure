@@ -31,7 +31,7 @@ class Particle{
   void bounceAgainstParticle(Particle other){
     PVector dist = PVector.sub(other.location, location);
     float distMag = dist.mag();
-    float termDist = 50*b*molarMass+50*other.b*other.molarMass;
+    float termDist = 200*b+200*other.b;
     if(distMag<termDist){
       float correct = (termDist-distMag)/2.0;
       PVector cor = dist.copy();

@@ -45,31 +45,49 @@ void draw() {
     h.display();
     h.move();
     h.bounce();
-    //for(Particle a:test.inContainer){
-    //  if(!p.equals(a)){
-    //    p.bounceAgainstParticle(a);
-    //  }
-    //}
+    for(Hydrogen a:test.particlesH){
+      if(!h.equals(a)){
+        h.bounceAgainstParticle(a);
+      }
+    }
+    for(Ammonia j:test.particlesN){
+       h.bounceAgainstParticle(j);
+    }
+    for(Oxygen e:test.particlesO){
+       h.bounceAgainstParticle(e);
+    }
   }
   for(Oxygen o:test.particlesO){
     o.display();
     o.move();
     o.bounce();
-    //for(Particle a:test.inContainer){
-    //  if(!p.equals(a)){
-    //    p.bounceAgainstParticle(a);
-    //  }
-    //}
+    for(Oxygen i:test.particlesO){
+      if(!o.equals(i)){
+        o.bounceAgainstParticle(i);
+      }
+    }
+    for(Ammonia k:test.particlesN){
+       o.bounceAgainstParticle(k);
+    }
+    for(Hydrogen u:test.particlesH){
+       u.bounceAgainstParticle(u);
+    }
   }
   for(Ammonia n:test.particlesN){
     n.display();
     n.move();
     n.bounce();
-    //for(Particle a:test.inContainer){
-    //  if(!p.equals(a)){
-    //    p.bounceAgainstParticle(a);
-    //  }
-    //}
+    for(Ammonia g:test.particlesN){
+      if(!n.equals(g)){
+        n.bounceAgainstParticle(g);
+      }
+    }
+    for(Hydrogen q:test.particlesH){
+       n.bounceAgainstParticle(q);
+    }
+    for(Oxygen w:test.particlesO){
+       n.bounceAgainstParticle(w);
+    }
   }
   if(gui.hasChanged("# of Hydrogen")||gui.hasChanged("# of Oxygen")||gui.hasChanged("# of Ammonia")){
     int deltaH = (int)(gui.slider("# of Hydrogen")) - test.molesH;
