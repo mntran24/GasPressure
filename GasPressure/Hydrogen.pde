@@ -11,8 +11,8 @@ class Hydrogen extends Particle{
   void bounce(){
     super.bounce();
   }
-  void bounceAgainstParticle(Particle other){
-    super.bounceAgainstParticle(other, );
+  void bounceAgainstParticle(float imf){
+    super.bounceAgainstParticle(imf);
   }
   void display(){
     super.display();
