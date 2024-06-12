@@ -26,6 +26,22 @@ class Particle{
     if(location.y>700-200*b || location.y<100+200*b){
       velocity.y*=-1;
     }
+    if(location.x>751-200*b){
+      //velocity.x*=-1;
+      location.x-=1;
+    }
+    if(location.x<399+200*b){
+      //velocity.x*=-1;
+      location.x+=1;
+    }
+    if(location.y<99+200*b){
+      //velocity.x*=-1;
+      location.y+=1;
+    }
+    if(location.y>701-200*b){
+      //velocity.x*=-1;
+      location.y-=1;
+    }
   }
   
   void bounceAgainstParticle(Particle other){

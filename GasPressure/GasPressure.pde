@@ -70,7 +70,7 @@ void draw() {
        o.bounceAgainstParticle(k);
     }
     for(Hydrogen u:test.particlesH){
-       u.bounceAgainstParticle(u);
+       o.bounceAgainstParticle(u);
     }
   }
   for(Ammonia n:test.particlesN){
