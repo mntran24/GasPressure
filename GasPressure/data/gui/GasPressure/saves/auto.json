@@ -825,6 +825,14 @@
       "type": "VALUE"
     },
     {
+      "valueFloat": 383.0,
+      "currentPrecisionIndex": 4,
+      "valueFloatPrecision": 1.0,
+      "className": "SliderIntNode",
+      "path": "Volume (L)",
+      "type": "VALUE"
+    },
+    {
       "valueFloat": 3.0,
       "currentPrecisionIndex": 4,
       "valueFloatPrecision": 1.0,
