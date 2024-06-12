@@ -17,6 +17,10 @@ String notice = "Temperature and # of particle is directly proportional to press
 +"close to ideal behavior (small molar mass and particle size). \n"
 +"Larger particles move more slowly than smaller ones. \n";
 
+int t1 = 0;
+int t2 = 0;
+
+
 void setup() {
   size(1200, 800, P2D);
   test = new Container();
@@ -24,9 +28,9 @@ void setup() {
   
   gui.sliderInt("Temp (K)", 298, 273, 373);
   
-  int currMolesH = gui.sliderInt("# of Hydrogen", 3, 0, 7);
-  int currMolesO = gui.sliderInt("# of Oxygen", 3, 0, 7);
-  int currMolesN = gui.sliderInt("# of Ammonia", 3, 0, 7);
+  int currMolesH = gui.sliderInt("# of Hydrogen", 0, 0, 7);
+  int currMolesO = gui.sliderInt("# of Oxygen", 0, 0, 7);
+  int currMolesN = gui.sliderInt("# of Ammonia", 0, 0, 7);
   
    //Default gas type
   
@@ -35,56 +39,146 @@ void setup() {
   //Display all particles (can change the particles no matter where each one is)
   test.updateParticle(currMolesH, currMolesO, currMolesN);
   //test.calcPressure(true);
+  
+  frameRate(10);
 }
 
 void draw() {
   background(255);
   test.display();
   
-  for(Hydrogen h:test.particlesH){
- 
-    h.display();
-
-    h.move();
-    h.bounce();
-
-    h.bounceAgainstParticle(1);
-      
-    //h.bounceAgainstParticle(test.particlesN, 0.7);
-    //h.bounceAgainstParticle(test.particlesO, 0.8);
-    
+  ArrayList<Particle> allParticlesH = new ArrayList<Particle>();
+  ArrayList<Particle> allParticlesO = new ArrayList<Particle>();
+  ArrayList<Particle> allParticlesN = new ArrayList<Particle>();
+  
+  for (Hydrogen a : test.particlesH) {
+    allParticlesH.add(a);
   }
-  for(Oxygen o:test.particlesO){
-    o.display();
-    o.move();
-    o.bounce();
- //<>//
-    o.bounceAgainstParticle(1);
-      
-    
-
-    o.bounceAgainstParticle(0.75);
-    
-
-    //u.bounceAgainstParticle(0.8);
-    
+  for (Oxygen b : test.particlesO) {
+    allParticlesO.add(b);
   }
-  for(Ammonia n:test.particlesN){
-    n.display();
-    n.move();
-    n.bounce();
-    for(Ammonia g:test.particlesN){
-      if(!n.equals(g)){
-        n.bounceAgainstParticle(0.4);
+  for (Ammonia c : test.particlesN){
+    allParticlesN.add(c);
+  }
+  
+  
+  
+  
+  for (int n = 0; n < allParticlesH.size()-1; n++) {
+    for (int k = n+1; k < allParticlesH.size(); k++) {
+      Particle p1 = allParticlesH.get(n);
+      Particle p2 = allParticlesH.get(k);
+      PVector loc1 = p1.location;
+      PVector loc2 = p2.location;
+      PVector diffV = loc2.sub(loc1);
+      float distBtwnV = diffV.mag();
+      float distBtwnC = p1.radius + p2.radius;
+      
+      if (distBtwnV <= distBtwnC) {
+        if (!p1.prevCollision.equals(p2) || !p2.prevCollision.equals(p1)) {
+          p1.collision(p2);
+          p1.bounce();
+          p2.collision(p1);
+          p2.bounce();
+          p1.move();
+          p2.move();
+        }
+        
+        PVector pDist = diffV.mult(distBtwnC).div(distBtwnV);
+        p1.location.sub(pDist.sub(diffV).div(2));
+        p2.location.add(pDist.sub(diffV).div(2));
       }
     }
-    for(Hydrogen q:test.particlesH){
-       n.bounceAgainstParticle(0.8);
-    }
-    for(Oxygen w:test.particlesO){
-       n.bounceAgainstParticle(0.75);
-    }
   }
+  
+  //for (Particle p : allParticlesH) {
+  //  p.bounce();
+  //}
+  
+  //for (Particle p : allParticlesH) {
+  //  p.move();
+  //}
+  for (Particle p : allParticlesH) {
+    p.display();
+  }
+  
+  
+  
+  
+    
+  //for(Hydrogen h:test.particlesH){
+  //  t1 += 1;
+ 
+  //  h.display();
+
+  //  h.move();
+  //  h.bounce();
+    
+  //  //for (Hydrogen a: test.particlesH) {
+  //  //  if (!a.equals(h)) {
+  //  //    //t2 += 1;
+  //  //    //h.bounceAgainstParticle(a, 0.4);
+  //  //  }
+  //  //}
+    
+  //  //for (Oxygen o: test.particlesO) {
+  //  //  o.bounceAgainstParticle(h, 0.4);
+      
+  //  //}
+    
+  //  //for (Ammonia a : test.particlesN) {
+  //  //  a.bounceAgainstParticle(h, 0.8);
+      
+  //  //}
+  //  h.bounceAgainstParticle(allParticlesH, 0.7);
+  //  h.bounceAgainstParticle(allParticlesO, 0.8);
+    
+  //}
+  //for(Oxygen o:test.particlesO){
+  //  o.display();
+  //  o.move();
+  //  o.bounce();
+    
+  //  for (Oxygen a: test.particlesO) {
+  //    if (!a.equals(o)) {
+  //      //o.bounceAgainstParticle(a, 1);
+  //    }
+  //  } //<>//
+  //  for (Ammonia a : test.particlesN) {
+  //    //a.bounceAgainstParticle(o, 0.8);
+  //  }
+      
+  //  for (Hydrogen h : test.particlesH) {
+  //    //h.bounceAgainstParticle(o, 0.4);
+  //  }
+    
+
+  //  //o.bounceAgainstParticle(0.75);
+    
+
+  //  //u.bounceAgainstParticle(0.8);
+    
+  //}
+  //for(Ammonia n:test.particlesN){
+  //  n.display();
+  //  n.move();
+  //  n.bounce();
+  //  for(Ammonia g:test.particlesN){
+  //    if(!n.equals(g)){
+  //      n.bounceAgainstParticle(n, 0.4);
+  //    }
+  //  }
+  //  for(Hydrogen q:test.particlesH){
+  //     n.bounceAgainstParticle(q, 0.8);
+  //  }
+  //  for(Oxygen w:test.particlesO){
+  //     n.bounceAgainstParticle(w, 0.75);
+  //  }
+  //}
+  
+  
+  
+
   if(gui.hasChanged("# of Hydrogen")||gui.hasChanged("# of Oxygen")||gui.hasChanged("# of Ammonia")){
     int deltaH = (int)(gui.slider("# of Hydrogen")) - test.molesH;
     int deltaO = (int)(gui.slider("# of Oxygen")) - test.molesO;

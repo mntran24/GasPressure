@@ -2,7 +2,7 @@ class Oxygen extends Particle{
   color default_color;
 
   Oxygen(float temp, float x, float y){
-    super("Oxygen", 32, temp, 1.382, 0.03186, x, y,color(55, 102, 196), 60);
+    super("Oxygen", 32, temp, 1.382, 0.03186, x, y,color(55, 102, 196), 12);
 
   }
   void move(){
@@ -11,8 +11,8 @@ class Oxygen extends Particle{
   void bounce(){
     super.bounce();
   }
-  void bounceAgainstParticle(float imf){
-    super.bounceAgainstParticle(imf);
+  void bounceAgainstParticle(ArrayList<Particle> other){
+    super.bounceAgainstParticle(other, 0.9);
   }
   void display(){
     super.display();

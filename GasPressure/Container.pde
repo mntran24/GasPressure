@@ -83,6 +83,7 @@ class Container {
   float temp = 298;
   float IGC = 0.08206;
   float pressure = 0;
+  ArrayList<Particle> allParticles;
   ArrayList<Hydrogen> particlesH;
   ArrayList<Oxygen> particlesO;
   ArrayList<Ammonia> particlesN;
@@ -95,6 +96,7 @@ class Container {
   
   Container() {
     //default temp = 298 K (room temp) and default pressure depends on default # of particles and type of particle (configured in setup())
+    allParticles = new ArrayList<Particle>();
     particlesH = new ArrayList<Hydrogen>();
     particlesO = new ArrayList<Oxygen>();
     particlesN = new ArrayList<Ammonia>();

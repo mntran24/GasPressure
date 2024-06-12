@@ -6,9 +6,10 @@ class Particle{
   String name;
   ArrayList<Particle> others;
   int index;
-  Container test;
+  Particle prevCollision;
+  //Container test;
   
-  Particle(String n, float mm, float temp, float a_val, float b_val, float x, float y, color default_color, float rad, Container c){
+  Particle(String n, float mm, float temp, float a_val, float b_val, float x, float y, color default_color, float rad){
     molarMass = mm;
     temperature = temp;
     a = a_val;
@@ -21,9 +22,11 @@ class Particle{
     //default_color = color(142,100,209);
     radius = rad;
     name = n;
-    test = c;
-    //others = particles;
-    //index = ind;
+
+    others = new ArrayList<Particle>();
+    index = 0;
+    prevCollision = null;
+
   }
   
   String getName() {
@@ -42,15 +45,37 @@ class Particle{
   }
   
   void bounce(){
-    if(location.x >= (750-400*b) || location.x <= (400+400*b)){
-      velocity.x *= -1; //* accelFactor;
+    if(location.x >= (745-400*b) || location.x <= (410+400*b)){
+      velocity.x *= -1; 
+      prevCollision = null;
     }
-    if(location.y >= (700-400*b) || location.y <= (100+400*b)){
-      velocity.y *= -1; // * accelFactor;
+    if(location.y >= (695-400*b) || location.y <= (130+400*b)){
+      velocity.y *= -1; 
+      prevCollision = null;
     }
   }
   
-  void bounceAgainstParticle(float imf){
+  void collision(Particle other) {
+    PVector diffInLoc = other.location.sub(location);
+    
+    //Velocity comp in direction of collision
+    float mag = diffInLoc.mag();
+    PVector dirOfCollision = diffInLoc.mult(diffInLoc.dot(velocity)/mag);
+    
+    //Velocity comp in tangent of collision
+    PVector dirOfTangCollision = velocity.sub(dirOfCollision);
+    
+    PVector diffInLoc2 = location.sub(other.location);
+    PVector dirOfCollision2 = diffInLoc2.mult(diffInLoc2.dot(other.velocity)/diffInLoc2.mag());
+    
+    PVector newV = dirOfCollision.mult((molarMass-other.molarMass)/(molarMass+other.molarMass)).add(dirOfCollision2.mult(2*other.molarMass/(molarMass+other.molarMass)));
+    
+    velocity = newV.add(dirOfTangCollision);
+    
+    prevCollision = other;
+  }
+  void bounceAgainstParticle(ArrayList<Particle> others, float imf){
+    
     //// Current distance between the centers of the particles (use distance formula)
     //float currDistBtwnCenters = location.sub(other.location).mag();//Math.sqrt(Math.pow(loc1.x - loc2.x, 2) + Math.pow(loc1.y - loc2.y, 2));
     
@@ -76,42 +101,88 @@ class Particle{
     //  float changeVx = (changeX - other.location.x) * imf;
     //  float changeVy = (changeY - other.location.y) * imf;
       
+      
     //  velocity.x -= changeVx;
     //  velocity.x *= -1;
     //  velocity.y -= changeVy;
     //  velocity.y *= -1;
+      
+      
     //  other.velocity.x += changeVx;
     //  other.velocity.x *= -1;
       
     //  other.velocity.y += changeVy;
     //  other.velocity.y *= -1;
       
+    //  bounce();
+    //  other.bounce();
       
-    for (int n = index+1; n < others.size(); n++) {
-      float currDistBtwnCenters = location.sub(others.get(n).location).mag();//Math.sqrt(Math.pow(loc1.x - loc2.x, 2) + Math.pow(loc1.y - loc2.y, 2));
+    //}
+    //  constrain(location.x,0, width/2);
+      //constrain(location.y,0, heigth==);
     
+    for (int n = 0; n < others.size()-1; n++) {
+      if(location.x >= (750-400*b) || location.x <= (400+400*b)){
+        velocity.x *= -1; //* accelFactor;
+      }
+      if(location.y >= (700-400*b) || location.y <= (100+400*b)){
+        velocity.y *= -1; // * accelFactor;
+      }
+      float currDistBtwnCenters = location.sub(others.get(n).location).mag();
       // Distance between centers of particles when tangent to each other 
       float distBtwnCenters = radius + others.get(n).radius;
-    
-      if (currDistBtwnCenters < distBtwnCenters) {
       
-        float dx = location.x - others.get(n).location.x;
-        float dy = location.y - others.get(n).location.y;
-        float angle = atan2(dy, dx);
+      for (int k = n+1; k < others.size(); k++) {
+        if (currDistBtwnCenters < distBtwnCenters) {
+          float dx = location.x - others.get(n).location.x;
+          float dy = location.y - others.get(n).location.y;
+          float angle = atan2(dy, dx);
+          
+          PVector changeLoc1 = new PVector(-1*cos(angle)*velocity.x/20, -1*sin(angle)*velocity.y/20);
+          PVector changeLoc2 = new PVector(-1*cos(angle)*others.get(n).velocity.x/20, -1*sin(angle)*others.get(n).velocity.y/20);
+          
+          PVector new1 = location.add(changeLoc1);
+          PVector new2 = others.get(n).location.add(changeLoc2);
+          if(new1.x >= (750-400*b) || new1.x <= (400+400*b)){
+            velocity.x *= -1; //* accelFactor;
+          }
+          if(new1.y >= (700-400*b) || new1.y <= (100+400*b)){
+            velocity.y *= -1; // * accelFactor;
+          }
+          
+          if(new2.x >= (750-400*b) || new2.x <= (400+400*b)){
+            velocity.x *= -1; //* accelFactor;
+          }
+          if(new2.y >= (700-400*b) || new2.y <= (100+400*b)){
+            velocity.y *= -1; // * accelFactor;
+          }
+          
+          else {
+            location.add(changeLoc1);
+            others.get(n).location.add(changeLoc2);
+          }
+        //velocity.x = imf*cos(angle)*(velocity.x - (2*others.get(n).molarMass*others.get(n).molarMass)*(velocity.x - others.get(n).velocity.x)/(molarMass*others.get(n).molarMass + others.get(n).molarMass*others.get(n).molarMass)) - 2*others.get(n).velocity.x;
+        //velocity.y = imf*cos(angle)*(velocity.y - (2*others.get(n).molarMass*others.get(n).molarMass)*(velocity.y - others.get(n).velocity.y)/(molarMass*others.get(n).molarMass + others.get(n).molarMass*others.get(n).molarMass)) - 2*others.get(n).velocity.y;
         
-        PVector changeLoc1 = new PVector(-1*cos(angle)*velocity.x, -1*sin(angle)*velocity.y);
-        PVector changeLoc2 = new PVector(-1*cos(angle)*others.get(n).velocity.x, -1*sin(angle)*others.get(n).velocity.y);
+        //others.get(n).velocity.x = imf*cos(angle)*(2*others.get(n).molarMass*others.get(n).molarMass*(velocity.x - others.get(n).velocity.x)/(others.get(n).molarMass*others.get(n).molarMass + others.get(n).molarMass*others.get(n).molarMass));
+        //others.get(n).velocity.y = imf*sin(angle)*(2*others.get(n).molarMass*others.get(n).molarMass*(velocity.y - others.get(n).velocity.y)/(others.get(n).molarMass*others.get(n).molarMass + others.get(n).molarMass*others.get(n).molarMass));
         
-        location.add(changeLoc1);
-        others.get(n).location.add(changeLoc2);
+        //if(new1.x >= (750-400*b) || new1.x <= (400+400*b)){
+        //  velocity.x = -1*imf*cos(angle)*(velocity.x - (2*others.get(n).molarMass*others.get(n).molarMass)*(velocity.x - others.get(n).velocity.x)/(molarMass*others.get(n).molarMass + others.get(n).molarMass*others.get(n).molarMass)) - 2*others.get(n).velocity.x;
+        //}
+        //if(new1.y >= (700-400*b) || new1.y <= (100+400*b)){
+        //  velocity.y = -1*imf*cos(angle)*(velocity.y - (2*others.get(n).molarMass*others.get(n).molarMass)*(velocity.y - others.get(n).velocity.y)/(molarMass*others.get(n).molarMass + others.get(n).molarMass*others.get(n).molarMass)) - 2*others.get(n).velocity.y;
+        //}
         
-        velocity.x = imf*cos(angle)*(velocity.x - (2*others.get(n).molarMass*others.get(n).molarMass)*(velocity.x - others.get(n).velocity.x)/(molarMass*others.get(n).molarMass + others.get(n).molarMass*others.get(n).molarMass)) - 2*others.get(n).velocity.x;
-        velocity.y = imf*cos(angle)*(velocity.y - (2*others.get(n).molarMass*others.get(n).molarMass)*(velocity.y - others.get(n).velocity.y)/(molarMass*others.get(n).molarMass + others.get(n).molarMass*others.get(n).molarMass)) - 2*others.get(n).velocity.y;
-        
-        others.get(n).velocity.x = imf*cos(angle)*(2*others.get(n).molarMass*others.get(n).molarMass*(velocity.x - others.get(n).velocity.x)/(others.get(n).molarMass*others.get(n).molarMass + others.get(n).molarMass*others.get(n).molarMass));
-        others.get(n).velocity.y = imf*sin(angle)*(2*others.get(n).molarMass*others.get(n).molarMass*(velocity.y - others.get(n).velocity.y)/(others.get(n).molarMass*others.get(n).molarMass + others.get(n).molarMass*others.get(n).molarMass));
-        
+        //if(new2.x >= (750-400*b) || new2.x <= (400+400*b)){
+        //  others.get(n).velocity.x = -1*imf*cos(angle)*(2*others.get(n).molarMass*others.get(n).molarMass*(velocity.x - others.get(n).velocity.x)/(others.get(n).molarMass*others.get(n).molarMass + others.get(n).molarMass*others.get(n).molarMass));
+        //}
+        //if(new2.y >= (700-400*b) || new2.y <= (100+400*b)){
+        //  others.get(n).velocity.y = -1*imf*sin(angle)*(2*others.get(n).molarMass*others.get(n).molarMass*(velocity.y - others.get(n).velocity.y)/(others.get(n).molarMass*others.get(n).molarMass + others.get(n).molarMass*others.get(n).molarMass));
+        //}
+        }
       }
+      
     }
     // Current distance between the centers of the particles (use distance formula)
     
@@ -248,6 +319,7 @@ class Particle{
     //  other.velocity.y = cosine * finalVel[1].y + sine * finalVel[1].x;
     //          //work in progress
     //}  
+  
   
   }
   void display(){
