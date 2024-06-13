@@ -88,11 +88,6 @@ void draw() {
     o.display();
     o.move();
     o.bounce(test.volume);
-   
-    //if (gui.hasChanged("Temp (K)")) {
-    //  o.velocity.mult(1+(gui.slider("Temp (K)")/273));
-    //  o.bounce(test.volume);
-    //}
     
     for(Oxygen i:test.particlesO){
       if(!o.equals(i)){
@@ -111,10 +106,6 @@ void draw() {
     n.move();
     n.bounce(test.volume);
     
-    //if (gui.hasChanged("Temp (K)")) {
-    //  n.velocity.mult(1+(gui.slider("Temp (K)")/273));
-    //  n.bounce(test.volume);
-    //}
     for(Ammonia g:test.particlesN){
       if(!n.equals(g)){
         n.bounceAgainstParticle(g);

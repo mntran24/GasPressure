@@ -104,7 +104,7 @@ class Particle{
       velocity.y = cosine * finalVel[0].y + sine * finalVel[0].x;
       other.velocity.x = cosine * finalVel[1].x - sine * finalVel[1].y;
       other.velocity.y = cosine * finalVel[1].y + sine * finalVel[1].x;
-              //work in progress
+              
     }  
   }
   

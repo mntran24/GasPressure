@@ -825,7 +825,7 @@
       "type": "VALUE"
     },
     {
-      "valueFloat": 383.0,
+      "valueFloat": 372.0,
       "currentPrecisionIndex": 4,
       "valueFloatPrecision": 1.0,
       "className": "SliderIntNode",
