@@ -2,8 +2,7 @@ class Particle{
   float molarMass, temperature, a, b;
   PVector velocity, location;
   color default_color;
-  float radius;
-  
+  String gasType = "default";
   Particle(float mm, float temp, float a_val, float b_val, float x, float y, color default_color){
     molarMass = mm;
     temperature = temp;
@@ -14,29 +13,34 @@ class Particle{
     int head = (int)random(1,359);
     velocity = new PVector((float)(speed*cos(head)),(float)(speed*sin(head)));
     this.default_color = default_color;
-    //default_color = color(142,100,209);
-    
-    radius = 50*b * molarMass;
   }
-  
-  //private PVector calcVelocity(){
-  //}
-  
-  //void applyForce(PVector force){
-  //  PVector f = force.div(molarMass);
-  //  acceleration.add(f);
-  //}
   
   void move(){
     location.add(velocity);
   }
   
-  void bounce(){
-    if(location.x>width-25*b*molarMass|| location.x<25*b*molarMass){
+  void bounce(int newVolHeight){
+    if(location.x>745-200*b|| location.x<405+200*b){
       velocity.x*=-1;
     }
-    if(location.y>height-25*b*molarMass || location.y<25*b*molarMass){
+    if(location.y>695-200*b || location.y<105+(600-newVolHeight)+200*b){
       velocity.y*=-1;
+    }
+    if(location.x>746-200*b){
+      //velocity.x*=-1;
+      location.x-=1;
+    }
+    if(location.x<404+200*b){
+      //velocity.x*=-1;
+      location.x+=1;
+    }
+    if(location.y<103+(600-newVolHeight)+200*b){
+      //velocity.x*=-1;
+      location.y+=1;
+    }
+    if(location.y>696-200*b){
+      //velocity.x*=-1;
+      location.y-=1;
     }
   }
   
@@ -70,7 +74,7 @@ class Particle{
     
     PVector dist = PVector.sub(other.location, location);
     float distMag = dist.mag();
-    float termDist = 50*b*molarMass+50*other.b*other.molarMass;
+    float termDist = 200*b+200*other.b;
     if(distMag<termDist){
       float correct = (termDist-distMag)/2.0;
       PVector cor = dist.copy();
@@ -127,7 +131,7 @@ class Particle{
       velocity.y = cosine * finalVel[0].y + sine * finalVel[0].x;
       other.velocity.x = cosine * finalVel[1].x - sine * finalVel[1].y;
       other.velocity.y = cosine * finalVel[1].y + sine * finalVel[1].x;
-              //work in progress
+              
     }  
   }
   
@@ -135,6 +139,6 @@ class Particle{
     stroke(1);
     strokeWeight(2);
     fill(default_color);
-    ellipse(location.x, location.y, radius, radius);
+    ellipse(location.x, location.y, 400*b, 400*b);
   }
 }

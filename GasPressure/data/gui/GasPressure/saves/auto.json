@@ -817,46 +817,50 @@
       "type": "FOLDER"
     },
     {
-      "valueFloat": 4.0,
-      "currentPrecisionIndex": 4,
-      "valueFloatPrecision": 1.0,
-      "className": "SliderNode",
-      "path": "Volume",
-      "type": "VALUE"
-    },
-    {
-      "valueFloat": 20.0,
+      "valueFloat": 298.0,
       "currentPrecisionIndex": 4,
       "valueFloatPrecision": 1.0,
       "className": "SliderIntNode",
-      "path": "Num of Particles",
+      "path": "Temp (K)",
       "type": "VALUE"
     },
     {
-      "valueString": "Oxygen",
-      "children": [
-        {
-          "valueBoolean": false,
-          "className": "RadioItemNode",
-          "path": "Type of Gas/Hydrogen",
-          "type": "TRANSIENT"
-        },
-        {
-          "valueBoolean": true,
-          "className": "RadioItemNode",
-          "path": "Type of Gas/Oxygen",
-          "type": "TRANSIENT"
-        },
-        {
-          "valueBoolean": false,
-          "className": "RadioItemNode",
-          "path": "Type of Gas/Ammonia",
-          "type": "TRANSIENT"
-        }
-      ],
-      "className": "RadioFolderNode",
-      "path": "Type of Gas",
-      "type": "FOLDER"
+      "valueFloat": 372.0,
+      "currentPrecisionIndex": 4,
+      "valueFloatPrecision": 1.0,
+      "className": "SliderIntNode",
+      "path": "Volume (L)",
+      "type": "VALUE"
+    },
+    {
+      "valueFloat": 3.0,
+      "currentPrecisionIndex": 4,
+      "valueFloatPrecision": 1.0,
+      "className": "SliderIntNode",
+      "path": "# of Hydrogen",
+      "type": "VALUE"
+    },
+    {
+      "valueFloat": 3.0,
+      "currentPrecisionIndex": 4,
+      "valueFloatPrecision": 1.0,
+      "className": "SliderIntNode",
+      "path": "# of Oxygen",
+      "type": "VALUE"
+    },
+    {
+      "valueFloat": 3.0,
+      "currentPrecisionIndex": 4,
+      "valueFloatPrecision": 1.0,
+      "className": "SliderIntNode",
+      "path": "# of Ammonia",
+      "type": "VALUE"
+    },
+    {
+      "valueBoolean": true,
+      "className": "ToggleNode",
+      "path": "Ideal Gas?",
+      "type": "VALUE"
     }
   ],
   "window": {},
