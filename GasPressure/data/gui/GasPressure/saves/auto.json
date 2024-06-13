@@ -817,7 +817,7 @@
       "type": "FOLDER"
     },
     {
-      "valueFloat": 298.0,
+      "valueFloat": 332.0,
       "currentPrecisionIndex": 4,
       "valueFloatPrecision": 1.0,
       "className": "SliderIntNode",
@@ -825,7 +825,7 @@
       "type": "VALUE"
     },
     {
-      "valueFloat": 372.0,
+      "valueFloat": 492.0,
       "currentPrecisionIndex": 4,
       "valueFloatPrecision": 1.0,
       "className": "SliderIntNode",
@@ -833,7 +833,7 @@
       "type": "VALUE"
     },
     {
-      "valueFloat": 3.0,
+      "valueFloat": 5.0,
       "currentPrecisionIndex": 4,
       "valueFloatPrecision": 1.0,
       "className": "SliderIntNode",
@@ -841,7 +841,7 @@
       "type": "VALUE"
     },
     {
-      "valueFloat": 3.0,
+      "valueFloat": 7.0,
       "currentPrecisionIndex": 4,
       "valueFloatPrecision": 1.0,
       "className": "SliderIntNode",
@@ -849,7 +849,7 @@
       "type": "VALUE"
     },
     {
-      "valueFloat": 3.0,
+      "valueFloat": 5.0,
       "currentPrecisionIndex": 4,
       "valueFloatPrecision": 1.0,
       "className": "SliderIntNode",

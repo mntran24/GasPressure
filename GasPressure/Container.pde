@@ -2,7 +2,7 @@
 import com.krab.lazy.*;
 
 class Container {
-  float Height = 600;
+  //float Height = 600;
   float Width = 350; 
   int volume = 600;
   float temp = 298;
@@ -70,14 +70,14 @@ class Container {
   float calcPressure(boolean ideal) {
     if (ideal) {
       //using Ideal Gas Law
-      pressure = ((molesH+molesN+molesO)*IGC*temp)/(volume);
+      pressure = ((molesH+molesN+molesO)*IGC*temp)/(volume*Width);
       return pressure;
     }
     else {
       //using Van Der Waal's eqn
-      double pH = (molesH*IGC*temp/(volume-molesH*bHydrogen))-(aHydrogen*Math.pow(molesH,2)/Math.pow(volume,2));
-      double pO = (molesO*IGC*temp/(volume-molesO*bOxygen))-(aOxygen*Math.pow(molesO,2)/Math.pow(volume,2));
-      double pN = (molesN*IGC*temp/(volume-molesN*bAmmonia))-(aAmmonia*Math.pow(molesN,2)/Math.pow(volume,2));
+      double pH = (molesH*IGC*temp/(volume*Width-molesH*bHydrogen))-(aHydrogen*Math.pow(molesH,2)/Math.pow(volume*Width,2));
+      double pO = (molesO*IGC*temp/(volume*Width-molesO*bOxygen))-(aOxygen*Math.pow(molesO,2)/Math.pow(volume*Width,2));
+      double pN = (molesN*IGC*temp/(volume*Width-molesN*bAmmonia))-(aAmmonia*Math.pow(molesN,2)/Math.pow(volume*Width,2));
       pressure = (float)pH+(float)pO+(float)pN;
       return pressure;
     }

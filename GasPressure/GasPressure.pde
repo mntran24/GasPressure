@@ -1,5 +1,4 @@
- //<>//
-LazyGui gui; 
+LazyGui gui;  //<>//
 Container test;
 String instructions = "To add new particles, move the slider corresponding to \n"
 +"the desired type of particle to the right. \n"
@@ -26,12 +25,12 @@ void setup() {
   int currTemp = gui.sliderInt("Temp (K)", 298, 273, 373);
   test.temp = currTemp;
   
-  int currVol = gui.sliderInt("Volume (L)", 600, 10, 600);
+  int currVol = gui.sliderInt("Volume (L)", 600, 400, 600);
   test.volume = currVol;
   
-  int currMolesH = gui.sliderInt("# of Hydrogen", 0, 0, 20);
-  int currMolesO = gui.sliderInt("# of Oxygen", 0, 0, 20);
-  int currMolesN = gui.sliderInt("# of Ammonia", 0, 0, 20);
+  int currMolesH = gui.sliderInt("# of Hydrogen", 0, 0, 7);
+  int currMolesO = gui.sliderInt("# of Oxygen", 0, 0, 7);
+  int currMolesN = gui.sliderInt("# of Ammonia", 0, 0, 7);
   
    //Default gas type
   

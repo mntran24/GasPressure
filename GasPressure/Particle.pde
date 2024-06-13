@@ -20,58 +20,31 @@ class Particle{
   }
   
   void bounce(int newVolHeight){
-    if(location.x>745-200*b|| location.x<405+200*b){
+    if(location.x>740-200*b|| location.x<410+200*b){
       velocity.x*=-1;
     }
-    if(location.y>695-200*b || location.y<105+(600-newVolHeight)+200*b){
+    if(location.y>690-200*b || location.y<110+(600-newVolHeight)+200*b){
       velocity.y*=-1;
     }
-    if(location.x>746-200*b){
+    if(location.x>740-200*b){
       //velocity.x*=-1;
       location.x-=1;
     }
-    if(location.x<404+200*b){
+    if(location.x<410+200*b){
       //velocity.x*=-1;
       location.x+=1;
     }
-    if(location.y<103+(600-newVolHeight)+200*b){
+    if(location.y<110+(600-newVolHeight)+200*b){
       //velocity.x*=-1;
       location.y+=1;
     }
-    if(location.y>696-200*b){
+    if(location.y>690-200*b){
       //velocity.x*=-1;
       location.y-=1;
     }
   }
   
   void bounceAgainstParticle(Particle other){
-    PVector v1 = velocity;
-    PVector v2 = other.velocity;
-    
-    PVector loc1 = location;
-    PVector loc2 = other.location;
-    
-    // Current distance between the centers of the particles (use distance formula)
-    double currDistBtwnCenters = Math.sqrt(Math.pow(loc1.x - loc2.x, 2) + Math.pow(loc1.y - loc2.y, 2));
-    
-    // Distance between centers of particles when tangent to each other 
-    double distBtwnCenters = radius + other.radius;
-    
-    // Split up velocity vector into x and y comp
-    float angle1 = Math.atan(loc1.y/loc1.x);  //FIX DIVISION 
-    float angle2 = Math.atan(loc2.y/loc2.x);
-    
-    float v1x = v1*cos(angle1);
-    float v1y = v1*sin(angle1);
-    float v2x = v2*cos(angle2);
-    float v2y = v2*sin(angle2);
-    
-    if (currDistBtwnCenters <= distBtwnCenters) {
-      
-    }
-    
-    
-    
     PVector dist = PVector.sub(other.location, location);
     float distMag = dist.mag();
     float termDist = 200*b+200*other.b;
